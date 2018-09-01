@@ -3,7 +3,10 @@
 ## Tutorial structure
 
 1. Introduction
-   **Branch**: `master`
+
+   Branch: `master`
+
 2. ZF1 as Zend Expressive middleware
-   **Branch**: `part1-expressive-integration`
+
+   Branch: `part1-expressive-integration`
 
