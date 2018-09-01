@@ -1,26 +1,30 @@
 <?php
 
-// Define path to application directory
-defined('APPLICATION_PATH')
-    || define('APPLICATION_PATH', realpath(dirname(__FILE__) . '/../application'));
+declare(strict_types=1);
 
-// Define application environment
-defined('APPLICATION_ENV')
-    || define('APPLICATION_ENV', (getenv('APPLICATION_ENV') ? getenv('APPLICATION_ENV') : 'production'));
+// Delegate static file requests back to the PHP built-in webserver
+if (PHP_SAPI === 'cli-server' && $_SERVER['SCRIPT_FILENAME'] !== __FILE__) {
+    return false;
+}
 
-// Ensure library/ is on include_path
-set_include_path(implode(PATH_SEPARATOR, array(
-    realpath(APPLICATION_PATH . '/../vendor/zendframework/zendframework1/library'),
-    get_include_path(),
-)));
+chdir(dirname(__DIR__));
+require 'vendor/autoload.php';
 
-/** Zend_Application */
-require_once 'Zend/Application.php';
+/**
+ * Self-called anonymous function that creates its own scope and keep the global namespace clean.
+ */
+(function () {
+    /** @var \Psr\Container\ContainerInterface $container */
+    $container = require 'config/container.php';
 
-// Create application, bootstrap, and run
-$application = new Zend_Application(
-    APPLICATION_ENV,
-    APPLICATION_PATH . '/configs/application.ini'
-);
-$application->bootstrap()
-            ->run();
+    /** @var \Zend\Expressive\Application $app */
+    $app = $container->get(\Zend\Expressive\Application::class);
+    $factory = $container->get(\Zend\Expressive\MiddlewareFactory::class);
+
+    // Execute programmatic/declarative middleware pipeline and routing
+    // configuration statements
+    (require 'config/pipeline.php')($app, $factory, $container);
+    (require 'config/routes.php')($app, $factory, $container);
+
+    $app->run();
+})();
