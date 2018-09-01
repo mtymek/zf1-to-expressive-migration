@@ -73,5 +73,4 @@ return function (Application $app, MiddlewareFactory $factory, ContainerInterfac
     // NotFoundHandler kicks in; alternately, you can provide other fallback
     // middleware to execute.
     $app->pipe(\App\Integration\Zf1Middleware::class);
-    $app->pipe(NotFoundHandler::class);
 };
