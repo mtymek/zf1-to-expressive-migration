@@ -7,6 +7,8 @@ namespace App;
 use App\Integration\Zf1ApplicationFactory;
 use App\Integration\Zf1Middleware;
 use App\Integration\Zf1MiddlewareFactory;
+use App\Service\HelloService;
+use Zend\ServiceManager\Factory\InvokableFactory;
 use Zend_Application;
 
 /**
@@ -42,6 +44,7 @@ class ConfigProvider
             ],
             'factories'  => [
                 Handler\HomePageHandler::class => Handler\HomePageHandlerFactory::class,
+                HelloService::class => InvokableFactory::class,
                 Zf1Middleware::class => Zf1MiddlewareFactory::class,
                 Zend_Application::class => Zf1ApplicationFactory::class,
             ],

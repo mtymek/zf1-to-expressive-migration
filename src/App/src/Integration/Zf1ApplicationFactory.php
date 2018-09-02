@@ -6,6 +6,7 @@ namespace App\Integration;
 
 use Psr\Container\ContainerInterface;
 use Zend_Application;
+use Zend_Controller_Front;
 
 class Zf1ApplicationFactory
 {
@@ -23,6 +24,8 @@ class Zf1ApplicationFactory
             APPLICATION_ENV,
             APPLICATION_PATH . '/configs/application.ini'
         );
+
+        Zend_Controller_Front::getInstance()->setParam('serviceContainer', $container);
 
         return $application;
     }
