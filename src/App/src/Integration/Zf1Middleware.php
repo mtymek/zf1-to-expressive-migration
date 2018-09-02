@@ -12,24 +12,17 @@ use Zend_Application;
 
 class Zf1Middleware implements MiddlewareInterface
 {
+    /** @var Zend_Application */
+    private $zf1Application;
+
+    public function __construct(Zend_Application $zf1Application)
+    {
+        $this->zf1Application = $zf1Application;
+    }
+
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        // Default ZF1 bootstrap - copied from legacy skeleton's index.php
-        defined('APPLICATION_PATH')
-            || define('APPLICATION_PATH', realpath('application'));
-        defined('APPLICATION_ENV')
-            || define('APPLICATION_ENV', (getenv('APPLICATION_ENV') ? getenv('APPLICATION_ENV') : 'production'));
-        set_include_path(implode(PATH_SEPARATOR, array(
-            realpath(APPLICATION_PATH . '/../vendor/zendframework/zendframework1/library'),
-            get_include_path(),
-        )));
-        $application = new Zend_Application(
-            APPLICATION_ENV,
-            APPLICATION_PATH . '/configs/application.ini'
-        );
-
-        // Run ZF1 application
-        $application->bootstrap()
+        $this->zf1Application->bootstrap()
             ->run();
 
         // Exit in order to avoid conflicts with Zend Expressive
