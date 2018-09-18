@@ -23,6 +23,10 @@ class ErrorController extends Zend_Controller_Action
                 break;
             default:
                 // application error
+                if (isset($errors->exception) && $errors->exception instanceof Throwable) {
+                    throw $errors->exception;
+                }
+
                 $this->getResponse()->setHttpResponseCode(500);
                 $priority = Zend_Log::CRIT;
                 $this->view->message = 'Application error';
