@@ -39,6 +39,8 @@ $aggregator = new ConfigAggregator([
     //   - `*.local.php`
     new PhpFileProvider(realpath(__DIR__) . '/autoload/{{,*.}global,{,*.}local}.php'),
 
+    new \App\Integration\Zf1ConfigProvider(realpath(__DIR__) . '/../application/configs/application.ini'),
+
     // Load development config if it exists
     new PhpFileProvider(realpath(__DIR__) . '/development.config.php'),
 ], $cacheConfig['config_cache_path']);
