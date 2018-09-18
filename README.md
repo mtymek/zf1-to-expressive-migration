@@ -8,5 +8,13 @@
 
 2. ZF1 as Zend Expressive middleware
 
-   Branch: `part1-expressive-integration`
+   Branch: `part2-expressive-integration`
+
+3. Shared Service Container 
+
+   Branch: `part3-service-manager-integration`
+   
+4. Shared PHP settings and error handling
+
+   Branch: `part4-settings-and-error-handling`
 
