@@ -1,6 +1,6 @@
 <?php
 
-namespace Cleeng\Platform\WebApi\SettingsManager;
+namespace App\Integration;
 
 class PhpSettingsManager
 {

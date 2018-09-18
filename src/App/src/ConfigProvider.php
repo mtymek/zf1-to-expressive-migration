@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace App;
 
+use App\Integration\ExpressiveApplicationDelegatorFactory;
 use App\Integration\Zf1ApplicationFactory;
 use App\Integration\Zf1Middleware;
 use App\Integration\Zf1MiddlewareFactory;
+use Zend\Expressive\Application;
 use Zend_Application;
 
 /**
@@ -44,6 +46,11 @@ class ConfigProvider
                 Handler\HomePageHandler::class => Handler\HomePageHandlerFactory::class,
                 Zf1Middleware::class => Zf1MiddlewareFactory::class,
                 Zend_Application::class => Zf1ApplicationFactory::class,
+            ],
+            'delegators' => [
+                Application::class => [
+                    ExpressiveApplicationDelegatorFactory::class
+                ],
             ],
         ];
     }
